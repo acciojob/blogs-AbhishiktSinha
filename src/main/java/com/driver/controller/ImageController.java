@@ -33,7 +33,7 @@ public class ImageController {
             return new ResponseEntity<>(count, HttpStatus.OK);
         } catch(Exception e) {
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(0, HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(e.getMessage().length(), HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

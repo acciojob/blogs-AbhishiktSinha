@@ -61,6 +61,9 @@ public class Blog {
     public List<Image> getImageList() {
         return imageList;
     }
+    public void setImageList(List<Image> imageList) {
+        this.imageList = imageList;
+    }
 
     public int getId() {
         return id;
@@ -70,7 +73,4 @@ public class Blog {
         this.id = id;
     }
 
-    public void setImageList(List<Image> imageList) {
-        this.imageList = imageList;
-    }
 }

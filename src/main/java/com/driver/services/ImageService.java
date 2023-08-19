@@ -57,11 +57,14 @@ public class ImageService {
         else {
             Image image = optionalImage.get();
             String imageDimension = image.getDimensions();
-            int imageLength = Integer.parseInt(imageDimension.substring(0, 1));
-            int imageBreadth = Integer.parseInt(imageDimension.substring(2, 3));
 
-            int screenLength = Integer.parseInt(screenDimensions.substring(0, 1));
-            int screenBreadth = Integer.parseInt(screenDimensions.substring(2, 3));
+            int image_index_X = imageDimension.indexOf('X');
+            int imageLength = Integer.parseInt(imageDimension.substring(0, image_index_X));
+            int imageBreadth = Integer.parseInt(imageDimension.substring(image_index_X+1));
+
+            int screen_index_X = screenDimensions.indexOf('X');
+            int screenLength = Integer.parseInt(screenDimensions.substring(0, screen_index_X));
+            int screenBreadth = Integer.parseInt(screenDimensions.substring(screen_index_X+1));
 
             int fitLength = screenLength / imageLength;
             int fitBreadth = screenBreadth / imageBreadth;
