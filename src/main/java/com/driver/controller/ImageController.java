@@ -22,7 +22,7 @@ public class ImageController {
             imageService.addImage(blogId, description, dimensions);
             return new ResponseEntity<>("Added image successfully", HttpStatus.OK);
         } catch(Exception e) {
-            return new ResponseEntity<>("Failed to add image", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
@@ -32,6 +32,7 @@ public class ImageController {
             int count = imageService.countImagesInScreen(id, screenDimensions);
             return new ResponseEntity<>(count, HttpStatus.OK);
         } catch(Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(0, HttpStatus.NOT_ACCEPTABLE);
         }
     }
