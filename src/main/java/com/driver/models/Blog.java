@@ -13,7 +13,7 @@ public class Blog {
     private int id;
     private String title;
     private String content;
-    private Date publicationDate;
+    private Date pubDate;
 
     @ManyToOne
     @JoinColumn
@@ -45,11 +45,11 @@ public class Blog {
         this.content = content;
     }
 
-    public Date getPublicationDate() {
-        return publicationDate;
+    public Date getPubDate() {
+        return pubDate;
     }
-    public void setPublicationDate(Date publicationDate) {
-        this.publicationDate = publicationDate;
+    public void setPubDate(Date pubDate) {
+        this.pubDate = pubDate;
     }
 
     public User getUser() {
@@ -62,6 +62,15 @@ public class Blog {
     public List<Image> getImageList() {
         return imageList;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setImageList(List<Image> imageList) {
         this.imageList = imageList;
     }
