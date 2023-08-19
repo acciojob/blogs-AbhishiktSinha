@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImageService {
@@ -15,17 +16,53 @@ public class ImageService {
     @Autowired
     ImageRepository imageRepository2;
 
-    public Image addImage(Integer blogId, String description, String dimensions){
+    public Image addImage(Integer blogId, String description, String dimensions)throws Exception{
         //add an image to the blog
+        Optional<Blog> optionalBlog = blogRepository2.findById(blogId);
+        if(!optionalBlog.isPresent())
+            throw new Exception("Blog not found");
 
+        Blog blog = optionalBlog.get();
+        Image image = new Image(description, dimensions);
+
+        image.setBlog(blog);
+
+        List<Image> blogImageList = blog.getImageList();
+        blogImageList.add(image);
+        blog.setImageList(blogImageList);
+
+        blogRepository2.save(blog);
+
+        return image;
     }
 
-    public void deleteImage(Integer id){
+    public void deleteImage(Integer id)throws Exception{
+        Optional<Image> optionalImage= imageRepository2.findById(id);
+        if(!optionalImage.isPresent())
+            throw new Exception("Image not found");
 
+        imageRepository2.deleteById(id);
     }
 
-    public int countImagesInScreen(Integer id, String screenDimensions) {
+    public int countImagesInScreen(Integer id, String screenDimensions)throws Exception {
         //Find the number of images of given dimensions that can fit in a screen having `screenDimensions`
+        Optional<Image> optionalImage= imageRepository2.findById(id);
+        if(!optionalImage.isPresent())
+            throw new Exception("Image not found");
 
+        Image image = optionalImage.get();
+        String imageDimension = image.getDimensions();
+        int imageLength = Integer.parseInt(imageDimension.substring(0,1));
+        int imageBreadth = Integer.parseInt(imageDimension.substring(2,3));
+
+        int screenLength = Integer.parseInt(screenDimensions.substring(0,1));
+        int screenBreadth = Integer.parseInt(screenDimensions.substring(2,3));
+
+        int fitLength = screenLength / imageLength;
+        int fitBreadth = screenBreadth / imageBreadth;
+
+        int imagesFit = fitBreadth * fitLength;
+
+        return imagesFit;
     }
 }
