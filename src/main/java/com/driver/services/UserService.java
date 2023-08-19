@@ -20,21 +20,29 @@ public class UserService {
         return user;
     }
 
-    public void deleteUser(int userId){
-        userRepository3.deleteById(userId);
+    public void deleteUser(int userId)throws Exception {
+        Optional<User> optionalUser = userRepository3.findById(userId);
+        if(!optionalUser.isPresent()) {
+            throw new Exception("User not present");
+        }
+        else {
+            userRepository3.deleteById(userId);
+        }
 
     }
 
     public User updateUser(Integer id, String password)throws Exception{
         Optional<User> optionalUser = userRepository3.findById(id);
-        if(!optionalUser.isPresent())
+        if(!optionalUser.isPresent()) {
             throw new Exception("User not found");
+        }
+        else {
+            User user = optionalUser.get();
+            user.setPassword(password);
 
-        User user = optionalUser.get();
-        user.setPassword(password);
+            userRepository3.save(user);
 
-        userRepository3.save(user);
-
-        return user;
+            return user;
+        }
     }
 }
