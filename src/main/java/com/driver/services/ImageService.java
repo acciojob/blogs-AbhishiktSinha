@@ -23,48 +23,52 @@ public class ImageService {
             System.out.println("ImageService Blog not found");
             throw new Exception("Blog not found");
         }
+        else {
+            Blog blog = optionalBlog.get();
+            Image image = new Image(description, dimensions);
 
-        Blog blog = optionalBlog.get();
-        Image image = new Image(description, dimensions);
+            image.setBlog(blog);
 
-        image.setBlog(blog);
+            List<Image> blogImageList = blog.getImageList();
+            blogImageList.add(image);
+            blog.setImageList(blogImageList);
 
-        List<Image> blogImageList = blog.getImageList();
-        blogImageList.add(image);
-        blog.setImageList(blogImageList);
+            blogRepository2.save(blog);
 
-        blogRepository2.save(blog);
-
-        return image;
+            return image;
+        }
     }
 
     public void deleteImage(Integer id)throws Exception{
         Optional<Image> optionalImage= imageRepository2.findById(id);
-        if(!optionalImage.isPresent())
+        if(!optionalImage.isPresent()) {
             throw new Exception("Image not found");
-
-        imageRepository2.deleteById(id);
+        }
+        else
+            imageRepository2.deleteById(id);
     }
 
     public int countImagesInScreen(Integer id, String screenDimensions)throws Exception {
         //Find the number of images of given dimensions that can fit in a screen having `screenDimensions`
         Optional<Image> optionalImage= imageRepository2.findById(id);
-        if(!optionalImage.isPresent())
+        if(!optionalImage.isPresent()) {
             throw new Exception("Image not found");
+        }
+        else {
+            Image image = optionalImage.get();
+            String imageDimension = image.getDimensions();
+            int imageLength = Integer.parseInt(imageDimension.substring(0, 1));
+            int imageBreadth = Integer.parseInt(imageDimension.substring(2, 3));
 
-        Image image = optionalImage.get();
-        String imageDimension = image.getDimensions();
-        int imageLength = Integer.parseInt(imageDimension.substring(0,1));
-        int imageBreadth = Integer.parseInt(imageDimension.substring(2,3));
+            int screenLength = Integer.parseInt(screenDimensions.substring(0, 1));
+            int screenBreadth = Integer.parseInt(screenDimensions.substring(2, 3));
 
-        int screenLength = Integer.parseInt(screenDimensions.substring(0,1));
-        int screenBreadth = Integer.parseInt(screenDimensions.substring(2,3));
+            int fitLength = screenLength / imageLength;
+            int fitBreadth = screenBreadth / imageBreadth;
 
-        int fitLength = screenLength / imageLength;
-        int fitBreadth = screenBreadth / imageBreadth;
+            int imagesFit = fitBreadth * fitLength;
 
-        int imagesFit = fitBreadth * fitLength;
-
-        return imagesFit;
+            return imagesFit;
+        }
     }
 }
