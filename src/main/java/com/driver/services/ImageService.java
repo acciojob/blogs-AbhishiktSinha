@@ -44,10 +44,6 @@ public class ImageService {
     }
 
     public void deleteImage(Integer id) {
-        Optional<Image> optionalImage= imageRepository2.findById(id);
-        if(!optionalImage.isPresent()) {
-            return;
-        }
         imageRepository2.deleteById(id);
     }
 
