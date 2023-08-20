@@ -25,15 +25,15 @@ public class BlogService {
     public Blog createAndReturnBlog(Integer userId, String title, String content){
         //create a blog at the current time
         Optional<User> optionalUser = userRepository1.findById(userId);
-//        if(!optionalUser.isPresent()) {
-//            throw new Exception("User not found");
-//        }
-//        if(title == null || title.equals("")) {
-//            throw new Exception("Title absent");
-//        }
-//        if(content == null || content.equals("")) {
-//            throw new Exception("Content absent");
-//        }
+        if(!optionalUser.isPresent()) {
+            return null;
+        }
+        if(title == null || title.equals("")) {
+            return null;
+        }
+        if(content == null || content.equals("")) {
+            return null;
+        }
 
         Blog blog = new Blog(title, content);
         User user = optionalUser.get();

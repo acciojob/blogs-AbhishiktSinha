@@ -19,16 +19,16 @@ public class ImageService {
     public Image addImage(Integer blogId, String description, String dimensions){
         //add an image to the blog
         Optional<Blog> optionalBlog = blogRepository2.findById(blogId);
-//        if(!optionalBlog.isPresent()) {
-//            System.out.println("ImageService Blog not found");
-//            throw new Exception("Blog not found");
-//        }
-//        if(description == null || description.equals("")) {
-//            throw new Exception("Description not provided");
-//        }
-//        if(dimensions == null || dimensions.equals("")) {
-//            throw new Exception("Dimensions not provided");
-//        }
+        if(!optionalBlog.isPresent()) {
+            System.out.println("ImageService Blog not found");
+            return null;
+        }
+        if(description == null || description.equals("")) {
+            return null;
+        }
+        if(dimensions == null || dimensions.equals("")) {
+            return null;
+        }
         Blog blog = optionalBlog.get();
         Image image = new Image(description, dimensions);
 
@@ -45,9 +45,9 @@ public class ImageService {
 
     public void deleteImage(Integer id) {
         Optional<Image> optionalImage= imageRepository2.findById(id);
-//        if(!optionalImage.isPresent()) {
-//            throw new Exception("Image not found");
-//        }
+        if(!optionalImage.isPresent()) {
+            return;
+        }
         imageRepository2.deleteById(id);
     }
 

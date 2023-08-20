@@ -15,10 +15,10 @@ public class UserService {
     UserRepository userRepository3;
 
     public User createUser(String username, String password) {
-//        if(username == null || password == null)
-//            throw new Exception("Essential parameter absent");
-//        if(username.equals("") || password.equals(""))
-//            throw new Exception("Empty username or password given");
+        if(username == null || password == null)
+            return null;
+        if(username.equals("") || password.equals(""))
+            return null;
 
         User user = new User(username, password);
         userRepository3.save(user);
@@ -27,18 +27,18 @@ public class UserService {
 
     public void deleteUser(int userId) {
         Optional<User> optionalUser = userRepository3.findById(userId);
-//        if(!optionalUser.isPresent()) {
-//            throw new Exception("User not present");
-//        }
+        if(!optionalUser.isPresent()) {
+            return;
+        }
         userRepository3.deleteById(userId);
 
     }
 
     public User updateUser(Integer id, String password) {
         Optional<User> optionalUser = userRepository3.findById(id);
-//        if(!optionalUser.isPresent()) {
-//            throw new Exception("User not found");
-//        }
+        if(!optionalUser.isPresent()) {
+            return null;
+        }
         User user = optionalUser.get();
         user.setPassword(password);
 
