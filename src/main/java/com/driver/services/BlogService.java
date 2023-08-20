@@ -22,10 +22,9 @@ public class BlogService {
     @Autowired
     UserRepository userRepository1;
 
-    public Blog createAndReturnBlog(Integer userId, String title, String content){
+    public Blog createAndReturnBlog(Integer userId, String title, String content)throws Exception{
         //create a blog at the current time
         Optional<User> optionalUser = userRepository1.findById(userId);
-
 
         Blog blog = new Blog(title, content);
         User user = optionalUser.get();
@@ -43,6 +42,7 @@ public class BlogService {
 
     public void deleteBlog(int blogId) {
         //delete blog and corresponding images
+        if(blogRepository1.findById(blogId).isPresent() == false) return;
        userRepository1.deleteById(blogId);
     }
 }
