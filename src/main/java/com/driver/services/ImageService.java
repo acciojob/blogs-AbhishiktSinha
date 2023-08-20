@@ -23,6 +23,12 @@ public class ImageService {
             System.out.println("ImageService Blog not found");
             throw new Exception("Blog not found");
         }
+        if(description == null || description.equals("")) {
+            throw new Exception("Description not provided");
+        }
+        if(dimensions == null || dimensions.equals("")) {
+            throw new Exception("Dimensions not provided");
+        }
         else {
             Blog blog = optionalBlog.get();
             Image image = new Image(description, dimensions);

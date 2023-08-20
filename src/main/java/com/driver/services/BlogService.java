@@ -28,6 +28,12 @@ public class BlogService {
         if(!optionalUser.isPresent()) {
             throw new Exception("User not found");
         }
+        if(title == null || title.equals("")) {
+            throw new Exception("Title absent");
+        }
+        if(content == null || content.equals("")) {
+            throw new Exception("Content absent");
+        }
         else {
             Blog blog = new Blog(title, content);
             User user = optionalUser.get();

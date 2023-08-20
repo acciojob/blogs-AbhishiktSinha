@@ -17,8 +17,12 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<Void> createUser(@RequestParam String username, @RequestParam String password) {
         // create a new user with given username and password
-        userService.createUser(username, password);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        try {
+            userService.createUser(username, password);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch(Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/delete/{userId}")

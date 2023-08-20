@@ -14,7 +14,12 @@ public class UserService {
     @Autowired
     UserRepository userRepository3;
 
-    public User createUser(String username, String password){
+    public User createUser(String username, String password)throws Exception {
+        if(username == null || password == null)
+            throw new Exception("Essential parameter absent");
+        if(username.equals("") || password.equals(""))
+            throw new Exception("Empty username or password given");
+
         User user = new User(username, password);
         userRepository3.save(user);
         return user;
