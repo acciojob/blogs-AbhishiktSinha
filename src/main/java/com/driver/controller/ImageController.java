@@ -18,34 +18,34 @@ public class ImageController {
     @PostMapping("/{blogId}/add-image")
     public ResponseEntity<String> addImage(@PathVariable int blogId, @RequestParam String description, @RequestParam String dimensions) {
         // Add image into the give blog
-        try {
-            imageService.addImage(blogId, description, dimensions);
-            return new ResponseEntity<>("Added image successfully", HttpStatus.OK);
-        } catch(Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
-        }
+        imageService.addImage(blogId, description, dimensions);
+        return new ResponseEntity<>("Added image successfully", HttpStatus.OK);
+//        try {
+//        } catch(Exception e) {
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+//        }
     }
 
     @GetMapping("/countImagesInScreen/{id}/{screenDimensions}")
     public ResponseEntity<Integer> countImagesInScreen(@PathVariable int id, @PathVariable String screenDimensions){
-        try {
-            int count = imageService.countImagesInScreen(id, screenDimensions);
-            return new ResponseEntity<>(count, HttpStatus.OK);
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(e.getMessage().length(), HttpStatus.NOT_ACCEPTABLE);
-        }
+        int count = imageService.countImagesInScreen(id, screenDimensions);
+        return new ResponseEntity<>(count, HttpStatus.OK);
+//        try {
+//        } catch(Exception e) {
+//            System.out.println(e.getMessage());
+//            return new ResponseEntity<>(e.getMessage().length(), HttpStatus.NOT_ACCEPTABLE);
+//        }
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteImage(@PathVariable int id) {
         // delete image using deleteById
-        try {
-            imageService.deleteImage(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch(Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        imageService.deleteImage(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+//        try {
+//        } catch(Exception e) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
     }
 }
 

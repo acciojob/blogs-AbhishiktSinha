@@ -22,40 +22,37 @@ public class BlogService {
     @Autowired
     UserRepository userRepository1;
 
-    public Blog createAndReturnBlog(Integer userId, String title, String content)throws Exception {
+    public Blog createAndReturnBlog(Integer userId, String title, String content){
         //create a blog at the current time
         Optional<User> optionalUser = userRepository1.findById(userId);
-        if(!optionalUser.isPresent()) {
-            throw new Exception("User not found");
-        }
-        if(title == null || title.equals("")) {
-            throw new Exception("Title absent");
-        }
-        if(content == null || content.equals("")) {
-            throw new Exception("Content absent");
-        }
-        else {
-            Blog blog = new Blog(title, content);
-            User user = optionalUser.get();
+//        if(!optionalUser.isPresent()) {
+//            throw new Exception("User not found");
+//        }
+//        if(title == null || title.equals("")) {
+//            throw new Exception("Title absent");
+//        }
+//        if(content == null || content.equals("")) {
+//            throw new Exception("Content absent");
+//        }
 
-            blog.setUser(user);
-            List<Blog> userBlogList = user.getBlogList();
-            userBlogList.add(blog);
-            user.setBlogList(userBlogList);
+        Blog blog = new Blog(title, content);
+        User user = optionalUser.get();
 
-            userRepository1.save(user);
+        blog.setUser(user);
+        List<Blog> userBlogList = user.getBlogList();
+        userBlogList.add(blog);
+        user.setBlogList(userBlogList);
 
-            return blog;
-        }
+        userRepository1.save(user);
+
+        return blog;
+
     }
 
-    public void deleteBlog(int blogId)throws Exception{
+    public void deleteBlog(int blogId) {
         //delete blog and corresponding images
         Optional<Blog> optionalBlog = blogRepository1.findById(blogId);
-        if(!optionalBlog.isPresent()) {
-            throw new Exception("Blog not found");
-        }
-        else
-            userRepository1.deleteById(blogId);
+
+        userRepository1.deleteById(blogId);
     }
 }
